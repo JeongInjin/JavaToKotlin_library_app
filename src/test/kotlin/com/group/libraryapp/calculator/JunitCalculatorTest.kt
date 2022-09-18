@@ -5,6 +5,16 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
+/**
+    컨트롤러
+     서비스
+ 도메인 | 레포지토리
+
+ 도메인 계층 -> 클래스를 테스트하는 것과 동일하게 테스트.(아래의 사칙연산처럼..)
+ 서비스, 레포지토리 -> 스프링 빈을 사용하는 테스트방법 사용 (@SpringBootTest)(데이터 위주 검증)
+ 컨트롤러 -> 스프링 빈을 사용하는 테스트방법 사용, 응답 받는 JSON 을 비롯한 HTTP 위주 검증.
+ */
+
 class JunitCalculatorTest {
 
     @Test
