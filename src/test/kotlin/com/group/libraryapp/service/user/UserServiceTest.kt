@@ -43,7 +43,7 @@ class UserServiceTest @Autowired constructor (
     }
 
     @Test
-    fun `getusersTest`() {
+    fun `getUsersTest`() {
         //given
         userRepository.saveAll(listOf(
             User("A", 20),
