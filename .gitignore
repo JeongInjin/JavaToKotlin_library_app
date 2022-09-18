@@ -35,3 +35,9 @@ out/
 
 ### VS Code ###
 .vscode/
+
+*.lock
+*.html
+*.bin
+*.xml
+*.iml
