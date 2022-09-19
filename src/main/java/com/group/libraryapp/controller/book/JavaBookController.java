@@ -4,17 +4,15 @@ import com.group.libraryapp.dto.book.request.JavaBookLoanRequest;
 import com.group.libraryapp.dto.book.request.JavaBookRequest;
 import com.group.libraryapp.dto.book.request.JavaBookReturnRequest;
 import com.group.libraryapp.service.book.JavaBookService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class BookController {
+@RequestMapping("/java")
+public class JavaBookController {
 
   private final JavaBookService bookService;
 
-  public BookController(JavaBookService bookService) {
+  public JavaBookController(JavaBookService bookService) {
     this.bookService = bookService;
   }
 
