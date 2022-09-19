@@ -1,6 +1,7 @@
 package com.group.libraryapp.service.book;
 
 import com.group.libraryapp.domain.book.Book;
+import com.group.libraryapp.domain.book.BookType;
 import com.group.libraryapp.domain.book.JavaBookRepository;
 import com.group.libraryapp.domain.user.User;
 import com.group.libraryapp.domain.user.JavaUserRepository;
@@ -30,7 +31,7 @@ public class JavaBookService {
 
   @Transactional
   public void saveBook(JavaBookRequest request) {
-    Book newBook = new Book(request.getName(), "COMPUTER", null);
+    Book newBook = new Book(request.getName(), request.getBookType(), null);
     bookRepository.save(newBook);
   }
 
