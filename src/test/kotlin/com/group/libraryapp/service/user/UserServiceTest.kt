@@ -44,7 +44,7 @@ class UserServiceTest @Autowired constructor (
 
     @Test
     fun `getUsersTest`() {
-        //given
+        //given:::
         userRepository.saveAll(listOf(
             User("A", 20),
             User("B", null),
