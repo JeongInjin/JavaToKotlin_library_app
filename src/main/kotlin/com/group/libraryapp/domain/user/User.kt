@@ -13,7 +13,7 @@ class User (
     val age: Int?,
 
     @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], orphanRemoval = true)
-    private val userLoanHistories: MutableList<UserLoanHistory> = mutableListOf(),
+    val userLoanHistories: MutableList<UserLoanHistory> = mutableListOf(),
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
