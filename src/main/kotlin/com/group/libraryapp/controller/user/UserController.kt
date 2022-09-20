@@ -5,8 +5,10 @@ import com.group.libraryapp.dto.user.request.UserUpdateRequest
 import com.group.libraryapp.dto.user.response.UserLoanHistoryResponse
 import com.group.libraryapp.dto.user.response.UserResponse
 import com.group.libraryapp.service.user.UserService
+import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 
+@Controller
 class UserController(
     private val userService: UserService
 ) {
