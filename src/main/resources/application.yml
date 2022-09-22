@@ -16,13 +16,14 @@ spring:
       enabled: true
       path: '/h2-console'
 
-  profiles:
-    active: chaos-monkey
+#  profiles:
+#    active: chaos-monkey
 chaos:
   monkey:
     enabled: true
     watcher:
       service: true
+      repository: true
     assaults:
       latencyActive: true
 

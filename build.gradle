@@ -28,6 +28,7 @@ dependencies {
     kapt('org.springframework.boot:spring-boot-configuration-processor')
     //chaos Monkey for Spring Boot
     implementation("de.codecentric:chaos-monkey-spring-boot:2.6.1")
+    implementation('org.springframework.boot:spring-boot-starter-actuator')
 
     runtimeOnly 'com.h2database:h2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
