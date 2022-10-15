@@ -1,9 +1,8 @@
-package com.group.tddStudy
+package com.group.tddStudy.basic_test
 
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestInstance
 
 /**
  * 아래 TestInstance annotation 설정을 주면 전역변수 또는 beforeAll 시 하나의 인스턴스만 생성된다.

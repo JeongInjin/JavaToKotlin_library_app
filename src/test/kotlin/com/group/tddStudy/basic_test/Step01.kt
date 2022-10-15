@@ -1,4 +1,4 @@
-package com.group.tddStudy
+package com.group.tddStudy.basic_test
 
 import org.junit.jupiter.api.*
 

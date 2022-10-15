@@ -1,4 +1,4 @@
-package com.group.tddStudy
+package com.group.tddStudy.basic_test
 
 import com.group.tddStudy.domain.Study
 import com.group.tddStudy.domain.StudyStatus.DRAFT

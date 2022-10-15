@@ -12,7 +12,7 @@ class Study(
     var status: StudyStatus? = StudyStatus.DRAFT
 
     private var openedDateTime: LocalDateTime? = null
-    private val owner: Member? = null
+    var owner: Member? = null
 
     fun open() {
         openedDateTime = LocalDateTime.now()
