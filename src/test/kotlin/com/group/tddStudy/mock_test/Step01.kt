@@ -6,12 +6,13 @@ import com.group.tddStudy.member.MemberService
 import com.group.tddStudy.study.StudyRepository
 import com.group.tddStudy.study.StudyService
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import org.mockito.BDDMockito.given
+import org.mockito.BDDMockito.*
 import org.mockito.Mock
-import org.mockito.Mockito
 import org.mockito.junit.jupiter.MockitoExtension
 
 /**
@@ -29,8 +30,6 @@ import org.mockito.junit.jupiter.MockitoExtension
         - 기대한 대로 동작하지 않으면 익셉션을 발생할 수 있다.
         - 모의 객체는 스텁이자 스파이도 된다.
  */
-
-
 @ExtendWith(MockitoExtension::class) //@Mock Annotation 을 사용하기위한 extension - 필수
 class Step01 {
 
@@ -39,11 +38,18 @@ class Step01 {
     @Mock
     lateinit var studyRepository: StudyRepository
 
+    lateinit var studyService: StudyService
+
+    @BeforeEach
+    fun init() {
+        studyService = StudyService(memberService, studyRepository)
+    }
+
     @Test
     @DisplayName("mock 객체 만들기")
     fun createStudyService1() {
-        val memberService = Mockito.mock(MemberService::class.java)
-        val studyRepository = Mockito.mock(StudyRepository::class.java)
+        val memberService = mock(MemberService::class.java)
+        val studyRepository = mock(StudyRepository::class.java)
         val studyService = StudyService(memberService, studyRepository)
         assertThat(studyService).isNotNull
     }
@@ -58,7 +64,6 @@ class Step01 {
     @Test
     @DisplayName("mock 객체를 전역 Mock Annotation 을 이용해서 받기")
     fun createStudyService3() {
-        val studyService = StudyService(memberService, studyRepository)
         assertThat(studyService).isNotNull
     }
 
@@ -75,24 +80,53 @@ class Step01 {
      */
 
     @Test
-    fun createStudy() {
-
+    @DisplayName("조건을 받아 mock 객체를 반환한다.")
+    fun createNewStudy() {
         //given
-        val studyService = StudyService(memberService, studyRepository)
+//        val studyService = StudyService(memberService, studyRepository)
 //        val basicMember = Member(1L, "basic@email.com")
         val member = Member.fixture()
-        val study = Study(10, "Kotlin")
-
-        given(memberService.findById(1)).willReturn(member)
-        given(studyRepository.save(study)).willReturn(study)
 
         //when
-        studyService.createNewStudy(1L, study)
+        // mock dml when() => 조건을 받아 mock 객체를 반환한다. Argument matchers 의 any() 를 사용하면 모든것을 허용한다.
 
-        //then
-        assertThat(member).isEqualTo(study.owner)
+        //when - > 조건을 받아 mock 객체를 반환한다. Argument matchers 의 any() 를 사용하면 모든것을 허용한다.
+//        `when`(memberService.findById(1L)).thenReturn(member)
+        `when`(memberService.findById(any(Long::class.java))).thenReturn(member)
+        val study = Study(10, "Kotlin")
+        val findById = memberService.findById(1L)
+        assertThat(findById!!.Email).isEqualTo("injin@email.com")
+
+        //조건을 주어 exception 을 발생시킨다.
+//        `when`(memberService.validate(1L)).thenThrow(java.lang.IllegalArgumentException::class.java)
+        doThrow(IllegalArgumentException()).`when`(memberService).validate(1L)
+        assertThrows(IllegalArgumentException::class.java) { memberService.validate(1L) }
 
     }
+
+    @Test
+    @DisplayName("메소드가 동일한 매개변수로 여러번 호출될 때 각기 다르게 행동하도록 조작할 수 있다.")
+    fun createNewStudy2() {
+        //given
+        val member = Member.fixture()
+
+        //when
+        `when`(memberService.findById(any(Long::class.java)))
+            .thenReturn(member) //첫번째 호출 반환
+            .thenThrow(java.lang.RuntimeException::class.java) //두번째 호출 반환
+            .thenReturn(null) //세번째 호출 반환
+
+        //첫번째 호출 테스트
+        val findById = memberService.findById(1L)
+        assertThat(findById!!.Email).isEqualTo("injin@email.com")
+
+        //두번째 호출 테스트
+        assertThrows(RuntimeException::class.java){ memberService.findById(1L)}
+
+        //세번째 호출 테스트
+        assertThat(memberService.findById(1L)).isNull()
+    }
+
 }
 
 
