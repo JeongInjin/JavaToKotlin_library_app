@@ -5,9 +5,23 @@ import javax.persistence.GeneratedValue
 import javax.persistence.Id
 
 @Entity
-class Member {
+class Member(
     @Id
     @GeneratedValue
-    private val id: Long? = null
-    private val Email: String? = null
+    var Id: Long? = null,
+    var Email: String? = null,
+) {
+
+
+    companion object {
+        fun fixture(
+            id: Long? = 1L,
+            email: String = "injin@email.com"
+        ): Member {
+            return Member(
+                Id = id,
+                Email = email
+            )
+        }
+    }
 }

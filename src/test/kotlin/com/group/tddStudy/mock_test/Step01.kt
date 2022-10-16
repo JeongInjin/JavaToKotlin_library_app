@@ -1,5 +1,7 @@
 package com.group.tddStudy.mock_test
 
+import com.group.tddStudy.domain.Member
+import com.group.tddStudy.domain.Study
 import com.group.tddStudy.member.MemberService
 import com.group.tddStudy.study.StudyRepository
 import com.group.tddStudy.study.StudyService
@@ -7,6 +9,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import org.mockito.BDDMockito.given
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.jupiter.MockitoExtension
@@ -62,5 +65,62 @@ class Step01 {
     /**
      * Stubbing 이란
      *  Mock 객체의 행동을 조작하는 것
+     * Mock 객체의 기본값
+     *      리턴 값이 있는 메소드는 모두 Null 을 리턴하고 있다.
+     *      - Optional 타입인 경우 Optional.empty로 리턴
+     *      Primitive 타입은 모두 Primitive 값을 따르고 있다.
+     *      - Ex. Boolean 인 경우 'false' / Integer 혹은 Long 인 경우 0
+     *      Collection 의 경우 모두 비어있는 Collection 을 가지고 있다.
+     *      Void 메소드의 경우 예외를 던지지 않고 아무 일도 발생하지 않는다.
      */
+
+    @Test
+    fun createStudy() {
+
+        //given
+        val studyService = StudyService(memberService, studyRepository)
+//        val basicMember = Member(1L, "basic@email.com")
+        val member = Member.fixture()
+        val study = Study(10, "Kotlin")
+
+        given(memberService.findById(1)).willReturn(member)
+        given(studyRepository.save(study)).willReturn(study)
+
+        //when
+        studyService.createNewStudy(1L, study)
+
+        //then
+        assertThat(member).isEqualTo(study.owner)
+
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
